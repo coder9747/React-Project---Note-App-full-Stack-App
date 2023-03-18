@@ -99,8 +99,18 @@ const login = async(req,res)=>
 
 }
 
+const userData = async(req,res)=>
+{
+    res.send({
+        status:"succes",
+        message:"user found",
+        data:req.user,
+    })
+}
 
 
 
 
-module.exports = {register,login}
+
+
+module.exports = {register,login,userData}
