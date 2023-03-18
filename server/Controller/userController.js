@@ -1,5 +1,6 @@
 const userModel = require("../Model/userModel");
 const bycrpt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const register = async(req,res)=>
 {
     const {name,email,password,passwordConfirm} = req.body;
@@ -60,9 +61,46 @@ const register = async(req,res)=>
 
 }
 
+const login = async(req,res)=>
+{
+
+   const {email,password} = req.body;
+   if(email && password)
+   {
+        const user = await userModel.findOne({email:email});
+        if(user)
+        {
+            const passwordMatch = await bycrpt.compare(password,user.password);
+            const key = "ldjflsdjf45u4u5943ksndl";
+            const token = jwt.sign({userId:user._id},key,{expiresIn:"5d"});
+            res.send({
+                status:"succes",
+                message:"Login Succes",
+                token:token,
+            })
+
+
+        }
+        else
+        {
+            res.send({
+                status:"error",
+                message:"Email Not Registered",
+            })
+        }
+   }
+   else
+   {
+    res.send({
+        status:"error",
+        message:"All fileds required",
+    })
+   }
+
+}
 
 
 
 
 
-module.exports = {register}
+module.exports = {register,login}
