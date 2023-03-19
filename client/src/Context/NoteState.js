@@ -40,6 +40,7 @@ const NoteState = (props) => {
         if(res.status === 'succes')
         {
             localStorage.setItem("token",res.token);
+            await getNotes();
             navigate('/home');
         }
         else
@@ -62,7 +63,37 @@ const NoteState = (props) => {
 
         })
         const res = await response.json();
-        console.log(res)
+        await getNotes();
+    }
+    const getNotes = async()=>
+    {
+        const url = `${host}/api/notes/getnotes`
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "authorization":`Bearer ${localStorage.getItem('token')}`,
+            },
+        })
+        const res = await response.json();
+        console.log(res.data)
+        setNotes(res.data)
+    }
+    const deleteNote = async(id)=>
+    {
+        const url = `${host}/api/notes/delete/${id}`
+        const response = await fetch(url, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "authorization":`Bearer ${localStorage.getItem('token')}`,
+            },
+        })
+        const res = await response.json();
+        console.log(res);
+        await getNotes()
+
+
     }
 
 
@@ -70,7 +101,7 @@ const NoteState = (props) => {
 
 
     return (
-        <NoteContext.Provider value={[notes, registerUser,loginUser,createNote]}>
+        <NoteContext.Provider value={[notes, registerUser,loginUser,createNote,deleteNote]}>
             {props.children}
         </NoteContext.Provider>
     )
