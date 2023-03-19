@@ -67,17 +67,30 @@ const login = async(req,res)=>
    const {email,password} = req.body;
    if(email && password)
    {
-        const user = await userModel.findOne({email:email});
+       const user = await userModel.findOne({email:email});
+       console.log(user)
         if(user)
         {
             const passwordMatch = await bycrpt.compare(password,user.password);
-            const key = "ldjflsdjf45u4u5943ksndl";
-            const token = jwt.sign({userId:user._id},key,{expiresIn:"5d"});
-            res.send({
-                status:"succes",
-                message:"Login Succes",
-                token:token,
-            })
+            if(passwordMatch)
+            {
+
+                const key = "ldjflsdjf45u4u5943ksndl";
+                const token = jwt.sign({userId:user._id},key,{expiresIn:"5d"});
+                res.send({
+                    status:"succes",
+                    message:"Login Succes",
+                    token:token,
+                })
+            }
+            else
+            {
+                res.send({
+                    status:"failed",
+                    message:"Wrong Password",
+                   
+                })
+            }
 
 
         }

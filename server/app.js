@@ -2,6 +2,7 @@ const express = require("express");
 const dbConnect = require("./Database/dbConnect");
 const userRouter = require("./route/userRoute");
 const noteRouter = require("./route/notesRoute");
+const cors = require('cors');
 
 
 //Creating app
@@ -13,7 +14,7 @@ dbConnect();
 
 //middleware
 app.use(express.json());
-
+app.use(cors())
 
 
 

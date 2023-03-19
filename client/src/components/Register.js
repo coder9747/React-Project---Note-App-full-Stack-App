@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
 import { useContext } from 'react'
 import noteContext from '../Context/noteContext'
-import { useNavigate } from 'react-router-dom';
 
-export default function Login() {
+export default function Register() {
    
-    const navigate = useNavigate();
     const [notes,registerUser]= useContext(noteContext);
     const [info,setInfo] = useState({
         name:"",

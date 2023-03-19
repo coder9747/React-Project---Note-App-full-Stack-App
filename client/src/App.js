@@ -5,15 +5,22 @@ import NoteState from "./Context/NoteState"
 import Home from './components/Home';
 import Login from './components/Login';
 import Register from "./components/Register"
+import Alert from './components/Alert';
+import { useContext, useState } from 'react';
+import NoteContext from "./Context/noteContext";
+
 
 function App() {
+  console.log(NoteContext)
+
   return (
     <>
       <BrowserRouter>
-        <NoteState>
+        <NoteState >
           <Nav />
+          <Alert message="hey"/>
           <Routes>
-            <Route path='/' element={<Home />} />
+            <Route path='/home' element={<Home />} />
             <Route path='/about' element={<div>About</div>} />
             <Route path='/contact' element={<div>Contact</div>} />
             <Route path='/login' element={<Login></Login>} />

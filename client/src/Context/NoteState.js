@@ -1,41 +1,60 @@
 import { useState, } from "react";
 import { useNavigate } from "react-router-dom";
 import NoteContext from "./noteContext";
-const NoteState = (props)=>
-{
+const NoteState = (props) => {
     const navigate = useNavigate();
     const host = "http://localhost:4500"
-    const [notes,setNotes] = useState([]);
+    const [notes, setNotes] = useState([]);
+    
 
-    const registerUser = async(props)=>
-    {
+    const registerUser = async (props) => {
         //calling api 
         const url = `${host}/api/user/register`;
         const response = await fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                },
+            },
             body: JSON.stringify(props)
         })
         const res = await response.json();
         console.log(res)
+        if (res.status === 'succes') {
+            navigate('/login');
+        }
+        else {
+            navigate("/register");
+        }
+    }
+    const loginUser = async(props)=>
+    {
+        const url = `${host}/api/user/login`;
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(props)
+        })
+        const res = await response.json();
         if(res.status === 'succes')
         {
-            navigate('/login');
+            navigate('/home');
         }
         else
         {
-            navigate("/register");
+            navigate("/login");
+
         }
+        
     }
 
 
 
 
 
-    return(
-        <NoteContext.Provider value={[notes,registerUser]}>
+    return (
+        <NoteContext.Provider value={[notes, registerUser,loginUser]}>
             {props.children}
         </NoteContext.Provider>
     )
