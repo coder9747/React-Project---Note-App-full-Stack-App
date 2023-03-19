@@ -39,6 +39,7 @@ const NoteState = (props) => {
         const res = await response.json();
         if(res.status === 'succes')
         {
+            localStorage.setItem("token",res.token);
             navigate('/home');
         }
         else
@@ -48,13 +49,28 @@ const NoteState = (props) => {
         }
         
     }
+    const createNote = async(props)=>
+    {
+        const url = `${host}/api/notes/create`;
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "authorization":`Bearer ${localStorage.getItem('token')}`,
+            },
+            body: JSON.stringify(props),
+
+        })
+        const res = await response.json();
+        console.log(res)
+    }
 
 
 
 
 
     return (
-        <NoteContext.Provider value={[notes, registerUser,loginUser]}>
+        <NoteContext.Provider value={[notes, registerUser,loginUser,createNote]}>
             {props.children}
         </NoteContext.Provider>
     )

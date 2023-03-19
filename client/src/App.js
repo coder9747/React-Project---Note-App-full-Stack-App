@@ -10,6 +10,7 @@ import { useContext, useState } from 'react';
 import NoteContext from "./Context/noteContext";
 
 
+
 function App() {
   console.log(NoteContext)
 
