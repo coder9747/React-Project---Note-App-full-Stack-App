@@ -95,13 +95,28 @@ const NoteState = (props) => {
 
 
     }
+    const updateNote = async(id,state)=>
+    {
+        const url = `${host}/api/notes/update/${id}`
+        const response = await fetch(url, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "authorization":`Bearer ${localStorage.getItem('token')}`,
+            },
+            body:JSON.stringify(state),
+        })
+        const res = await response.json();
+        console.log(res);
+        await getNotes()
+    }
 
 
 
 
 
     return (
-        <NoteContext.Provider value={[notes, registerUser,loginUser,createNote,deleteNote]}>
+    <NoteContext.Provider value={[notes, registerUser,loginUser,createNote,deleteNote,updateNote]}>
             {props.children}
         </NoteContext.Provider>
     )
