@@ -76,7 +76,6 @@ const NoteState = (props) => {
             },
         })
         const res = await response.json();
-        console.log(res.data)
         setNotes(res.data)
     }
     const deleteNote = async(id)=>
@@ -95,7 +94,7 @@ const NoteState = (props) => {
 
 
     }
-    const updateNote = async(id,state)=>
+    const updateNote = async({title,description,id})=>
     {
         const url = `${host}/api/notes/update/${id}`
         const response = await fetch(url, {
@@ -104,7 +103,7 @@ const NoteState = (props) => {
                 "Content-Type": "application/json",
                 "authorization":`Bearer ${localStorage.getItem('token')}`,
             },
-            body:JSON.stringify(state),
+            body:JSON.stringify({title,description}),
         })
         const res = await response.json();
         console.log(res);

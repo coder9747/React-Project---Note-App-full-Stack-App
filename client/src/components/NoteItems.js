@@ -2,15 +2,7 @@ import React, { useContext, useState,useRef} from 'react'
 import noteContext from '../Context/noteContext';
 export default function NoteItems({ title, description, _id,openModel }) {
     const [notes, registerUser, loginUser, createNote, deleteNote,updateNote] = useContext(noteContext);
-    const [state,setState] = useState({
-        title:"",
-        description:"",
-    })
-    const handleClick = (e)=>
-    {
-        setState({...state,[e.target.name]:e.target.value})
-    }
-
+    
     return (
         <div class="card col-md-4 mx-3 my-2" style={{ width: "18rem" }}>
             <div class="card-body">

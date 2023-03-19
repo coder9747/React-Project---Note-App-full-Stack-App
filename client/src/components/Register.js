@@ -5,6 +5,8 @@ import noteContext from '../Context/noteContext'
 export default function Register() {
    
     const [notes,registerUser]= useContext(noteContext);
+    
+
     const [info,setInfo] = useState({
         name:"",
         email:"",
